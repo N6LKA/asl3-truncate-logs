@@ -62,14 +62,30 @@ echo "--- Setting up cron job ---"
 
 CRON_COMMENT="#Truncate Logs daily at 06:00. (Do not use if rebooting weekly. Reboot clears all logs.)"
 CRON_JOB="00 06 * * * /etc/asterisk/scripts/truncate_logs.sh >/dev/null 2>&1"
+CURRENT_CRON=$(crontab -l 2>/dev/null)
 
-# Remove any existing entry and its associated comment (handles old path/wording variations)
-crontab -l 2>/dev/null | grep -v "truncate_logs\|Truncate Logs" | crontab -
-
-# Add fresh entry with blank line and comment
-(crontab -l 2>/dev/null; echo ""; echo "$CRON_COMMENT"; echo "$CRON_JOB") | crontab -
-
-echo -e "${GREEN}Cron job set (daily at 06:00).${NC}"
+if echo "$CURRENT_CRON" | grep -q "truncate_logs.sh"; then
+    # Entry exists — update the cron line and its preceding comment in-place
+    NEW_CRON=$(echo "$CURRENT_CRON" | awk -v comment="$CRON_COMMENT" -v job="$CRON_JOB" '
+        { lines[NR] = $0 }
+        END {
+            for (i = 1; i <= NR; i++) {
+                if (lines[i] ~ /truncate_logs\.sh/) {
+                    if (i > 1 && lines[i-1] ~ /[Tt]runcate/) {
+                        lines[i-1] = comment
+                    }
+                    lines[i] = job
+                }
+            }
+            for (i = 1; i <= NR; i++) print lines[i]
+        }')
+    echo "$NEW_CRON" | crontab -
+    echo -e "${GREEN}Cron job updated.${NC}"
+else
+    # No existing entry — append with blank line, comment, and cron line
+    (crontab -l 2>/dev/null; echo ""; echo "$CRON_COMMENT"; echo "$CRON_JOB") | crontab -
+    echo -e "${GREEN}Cron job added (daily at 06:00).${NC}"
+fi
 
 echo ""
 echo "=============================================="
