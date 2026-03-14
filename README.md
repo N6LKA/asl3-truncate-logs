@@ -33,15 +33,16 @@ Installs `truncate_logs.sh` to `/etc/asterisk/scripts/`, sets ownership to `root
 /etc/asterisk/scripts/truncate_logs.sh
 ```
 
-### Schedule with Cron
+### Cron Schedule
 
-Add a cron entry to run automatically. The example below runs weekly on Sundays at 4:05 AM:
+The installer automatically adds the following entry to the root crontab to run daily at 6:00 AM:
 
 ```
-05 04 * * 0 /etc/asterisk/scripts/truncate_logs.sh
+#Truncate Logs daily at 06:00. (Do not use if rebooting weekly. Reboot clears all logs.)
+00 06 * * * /etc/asterisk/scripts/truncate_logs.sh >/dev/null 2>&1
 ```
 
-Edit your crontab with:
+If a cron entry for this script already exists, the installer will update it. To change the schedule:
 
 ```bash
 crontab -e

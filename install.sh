@@ -56,6 +56,34 @@ chmod 750 "$SCRIPT_FILE"
 # --- Clean up backup on success ---
 [[ -n "$BACKUP" && -f "$BACKUP" ]] && rm -f "$BACKUP"
 
+# --- Set up root cron job ---
+echo ""
+echo "--- Setting up cron job ---"
+
+CRON_COMMENT="#Truncate Logs daily at 06:00. (Do not use if rebooting weekly. Reboot clears all logs.)"
+CRON_JOB="00 06 * * * /etc/asterisk/scripts/truncate_logs.sh >/dev/null 2>&1"
+CURRENT_CRON=$(crontab -l 2>/dev/null)
+
+if echo "$CURRENT_CRON" | grep -q "truncate_logs.sh"; then
+    # Entry already exists — update the cron line if it differs
+    EXISTING_LINE=$(echo "$CURRENT_CRON" | grep "truncate_logs.sh")
+    if [[ "$EXISTING_LINE" == "$CRON_JOB" ]]; then
+        echo "Cron job already configured correctly."
+    else
+        NEW_CRON=$(echo "$CURRENT_CRON" | sed "s|.*truncate_logs\.sh.*|$CRON_JOB|")
+        echo "$NEW_CRON" | crontab -
+        echo -e "${GREEN}Cron job updated.${NC}"
+    fi
+else
+    # No existing entry — append with a blank line before the comment
+    if [[ -z "$CURRENT_CRON" ]]; then
+        printf "%s\n%s\n" "$CRON_COMMENT" "$CRON_JOB" | crontab -
+    else
+        { echo "$CURRENT_CRON"; echo ""; echo "$CRON_COMMENT"; echo "$CRON_JOB"; } | crontab -
+    fi
+    echo -e "${GREEN}Cron job added (daily at 06:00).${NC}"
+fi
+
 echo ""
 echo "=============================================="
 if [[ -n "$BACKUP" ]]; then
@@ -69,8 +97,7 @@ echo ""
 echo "To run manually:"
 echo "  /etc/asterisk/scripts/truncate_logs.sh"
 echo ""
-echo "Recommended cron entry (Sundays at 4:05 AM):"
-echo "  05 04 * * 0 /etc/asterisk/scripts/truncate_logs.sh"
-echo "  Add with: crontab -e"
+echo "To change the cron schedule:"
+echo "  crontab -e"
 echo "=============================================="
 echo ""
