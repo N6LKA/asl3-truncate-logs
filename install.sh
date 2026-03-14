@@ -63,8 +63,8 @@ echo "--- Setting up cron job ---"
 CRON_COMMENT="#Truncate Logs daily at 06:00. (Do not use if rebooting weekly. Reboot clears all logs.)"
 CRON_JOB="00 06 * * * /etc/asterisk/scripts/truncate_logs.sh >/dev/null 2>&1"
 
-# Remove any existing entry (also handles old path variations)
-crontab -l 2>/dev/null | grep -v "truncate_logs" | crontab -
+# Remove any existing entry and its associated comment (handles old path/wording variations)
+crontab -l 2>/dev/null | grep -v "truncate_logs\|Truncate Logs" | crontab -
 
 # Add fresh entry with blank line and comment
 (crontab -l 2>/dev/null; echo ""; echo "$CRON_COMMENT"; echo "$CRON_JOB") | crontab -
