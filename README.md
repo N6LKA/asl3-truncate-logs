@@ -56,11 +56,11 @@ The following log files are monitored by default. Edit `truncate_logs.sh` to add
 | File | Max Size |
 |------|----------|
 | `/var/log/asterisk/messages.log` | 300,000 bytes |
-| `/var/log/asterisk/connections.log` | 100,000 bytes |
+| `/var/log/asterisk/connectlog` | 100,000 bytes |
 | `/var/log/apache2/access.log` | 300,000 bytes |
 | `/var/log/apache2/error.log` | 20,000 bytes |
 
-> **Note:** If you are using [asl3-connection-log](https://github.com/N6LKA/asl3-connection-log), verify that the connection log path matches. That project writes to `/var/log/asterisk/connectlog` (no `.log` extension).
+> **Note:** The connection log path (`connectlog`) matches the [asl3-connection-log](https://github.com/N6LKA/asl3-connection-log) project. This path differs from the original HamVoIP filename (`connections.log`).
 
 ---
 

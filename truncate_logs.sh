@@ -50,12 +50,12 @@ text_truncate="LOG - Asterisk messages.log size adjusted"
 text_ok="LOG - Asterisk messages.log size OK"
 truncate_log
 
-# Note: Verify this matches your connection log path.
-# If using asl3-connection-log, the path may be /var/log/asterisk/connectlog
-FILE="/var/log/asterisk/connections.log"
+# Connection log written by asl3-connection-log (https://github.com/N6LKA/asl3-connection-log)
+# Originally connections.log on HamVoIP; ASL3 uses connectlog (no extension)
+FILE="/var/log/asterisk/connectlog"
 maximumsize=100000
-text_truncate="LOG - Asterisk connections.log size adjusted"
-text_ok="LOG - Asterisk connections.log size OK"
+text_truncate="LOG - Asterisk connectlog size adjusted"
+text_ok="LOG - Asterisk connectlog size OK"
 truncate_log
 
 # ASL3 uses Apache2, not httpd
