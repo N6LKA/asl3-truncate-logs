@@ -16,7 +16,7 @@ A simple bash script for [ASL3](https://allstarlink.org/) (AllStar Link 3) syste
 Run the following command as root or with sudo for both fresh installs and updates:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/N6LKA/asl3-truncate-logs/main/install.sh)
+bash <(curl -fsSL -H "Cache-Control: no-cache" https://raw.githubusercontent.com/N6LKA/asl3-truncate-logs/main/install.sh)
 ```
 
 Installs `truncate_logs.sh` to `/etc/asterisk/scripts/`, sets ownership to `root:asterisk`, and makes it executable.
