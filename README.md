@@ -1,5 +1,10 @@
 # asl3-truncate-logs
 
+![Release Version](https://img.shields.io/github/v/release/N6LKA/asl3-truncate-logs?label=Version&color=f15d24)
+![Release Date](https://img.shields.io/github/release-date/N6LKA/asl3-truncate-logs?label=Released&color=f15d24)
+![Hits](https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2FN6LKA%2Fasl3-truncate-logs.json&label=Hits&color=f15d24)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/N6LKA/asl3-truncate-logs?label=Size&color=f15d24)
+
 A simple bash script for [ASL3](https://allstarlink.org/) (AllStar Link 3) systems that monitors selected log files and truncates them when they exceed a defined size. Keeps the most recent data and logs the action to syslog. Designed to run via cron or manually.
 
 ---
