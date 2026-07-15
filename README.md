@@ -1,9 +1,9 @@
-# asl3-truncate-logs
+# ASL3-Truncate-Logs
 
-![Release Version](https://img.shields.io/github/v/release/N6LKA/asl3-truncate-logs?label=Version&color=f15d24)
-![Release Date](https://img.shields.io/github/release-date/N6LKA/asl3-truncate-logs?label=Released&color=f15d24)
-![Hits](https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2FN6LKA%2Fasl3-truncate-logs.json&label=Hits&color=f15d24)
-![GitHub Repo Size](https://img.shields.io/github/repo-size/N6LKA/asl3-truncate-logs?label=Size&color=f15d24)
+![Release Version](https://img.shields.io/github/v/release/N6LKA/ASL3-Truncate-Logs?label=Version&color=f15d24)
+![Release Date](https://img.shields.io/github/release-date/N6LKA/ASL3-Truncate-Logs?label=Released&color=f15d24)
+![Hits](https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2FN6LKA%2FASL3-Truncate-Logs.json&label=Hits&color=f15d24)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/N6LKA/ASL3-Truncate-Logs?label=Size&color=f15d24)
 
 A simple bash script for [ASL3](https://allstarlink.org/) (AllStar Link 3) systems that monitors selected log files and truncates them when they exceed a defined size. Keeps the most recent data and logs the action to syslog. Designed to run via cron or manually.
 
@@ -21,7 +21,7 @@ A simple bash script for [ASL3](https://allstarlink.org/) (AllStar Link 3) syste
 Run the following command as root or with sudo for both fresh installs and updates:
 
 ```bash
-bash <(curl -fsSL -H "Cache-Control: no-cache" https://raw.githubusercontent.com/N6LKA/asl3-truncate-logs/main/install.sh)
+bash <(curl -fsSL -H "Cache-Control: no-cache" https://raw.githubusercontent.com/N6LKA/ASL3-Truncate-Logs/main/install.sh)
 ```
 
 Installs `truncate_logs.sh` to `/etc/asterisk/scripts/`, sets ownership to `root:asterisk`, and makes it executable.
@@ -66,7 +66,7 @@ The following log files are monitored by default. Edit `truncate_logs.sh` to add
 | `/var/log/apache2/access.log` | 300,000 bytes |
 | `/var/log/apache2/error.log` | 20,000 bytes |
 
-> **Note:** The connection log path (`connectlog`) matches the [asl3-connection-log](https://github.com/N6LKA/asl3-connection-log) project. This path differs from the original HamVoIP filename (`connections.log`).
+> **Note:** The connection log path (`connectlog`) matches the [ASL3-Connection-Log](https://github.com/N6LKA/ASL3-Connection-Log) project. This path differs from the original HamVoIP filename (`connections.log`).
 
 ---
 
